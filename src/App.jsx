@@ -4,30 +4,23 @@ import MealSelector from './components/MealSelector'
 import { fetchMeals, saveMeals, resetWeek } from './utils/api'
 import './App.css'
 
-// Lista pietanze disponibili
+// Lista ingredienti disponibili
 const AVAILABLE_MEALS = [
-  'Pasta al pomodoro',
-  'Pasta al pesto',
-  'Pasta alla carbonara',
-  'Risotto ai funghi',
-  'Risotto alla milanese',
-  'Pollo arrosto',
-  'Pollo alla griglia',
-  'Salmone al forno',
-  'Pesce spada alla griglia',
-  'Insalata Caesar',
-  'Insalata mista',
-  'Pizza margherita',
-  'Pizza quattro stagioni',
-  'Burger con patatine',
-  'Zuppa di verdure',
-  'Minestrone',
-  'Lasagne al ragù',
-  'Tortellini in brodo',
-  'Cotoletta alla milanese',
-  'Arrosto di vitello',
-  'Spaghetti alle vongole',
-  'Ravioli ricotta e spinaci'
+  'Vitello (30g)',
+  'Tacchino (30g)',
+  'Pollo (30g)',
+  'Platessa (30g)',
+  'Merluzzo (30g)',
+  'Uovo (1 tuorlo)',
+  'Lenticchie 1 (30g cotte)',
+  'Lenticchie 2 (30g cotte)',
+  'Piselli secchi (30g cotti)',
+  'Ceci secchi (30g cotti)',
+  'Ricotta (25g)',
+  'Robiola (25g)',
+  'Formaggio fuso',
+  'Broccoli',
+  'Pomodori (per sugo)'
 ]
 
 function App() {
