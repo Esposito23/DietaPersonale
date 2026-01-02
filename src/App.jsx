@@ -150,17 +150,6 @@ function App() {
         </div>
       </header>
 
-      <div className="stats">
-        <div className="stat-card">
-          <span className="stat-number">{getUsedMeals().length}</span>
-          <span className="stat-label">Pasti pianificati</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-number">{getAvailableMeals().length}</span>
-          <span className="stat-label">Pietanze disponibili</span>
-        </div>
-      </div>
-
       <WeekView
         weeklyMeals={weeklyMeals}
         onAddMeal={handleAddMeal}
