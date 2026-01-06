@@ -1,4 +1,4 @@
-# Dieta Personale
+# Diario Enea
 
 Applicazione React + Vite pronta per deploy su Vercel.
 

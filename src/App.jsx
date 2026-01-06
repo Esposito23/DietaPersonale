@@ -207,7 +207,7 @@ function App() {
     <div className="App">
       <header className="app-header">
         <div className="header-content">
-          <h1>Dieta Personale</h1>
+          <h1>Diario Enea</h1>
           <div className="tabs">
             <button
               className={`tab ${activeTab === 'dieta' ? 'active' : ''}`}
