@@ -26,6 +26,7 @@ const AVAILABLE_MEALS = [
 ]
 
 function App() {
+  const [activeTab, setActiveTab] = useState('dieta')
   const [weeklyMeals, setWeeklyMeals] = useState({})
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -142,31 +143,56 @@ function App() {
       <header className="app-header">
         <div className="header-content">
           <h1>Dieta Personale</h1>
-          <p className="subtitle">Pianifica i tuoi pasti settimanali</p>
+          <div className="tabs">
+            <button
+              className={`tab ${activeTab === 'dieta' ? 'active' : ''}`}
+              onClick={() => setActiveTab('dieta')}
+            >
+              Dieta
+            </button>
+            <button
+              className={`tab ${activeTab === 'altro' ? 'active' : ''}`}
+              onClick={() => setActiveTab('altro')}
+            >
+              Altro
+            </button>
+          </div>
         </div>
-        <div className="header-actions">
-          <button className="reset-btn" onClick={handleReset}>
-            Reset Settimana
-          </button>
-          {saving && <span className="save-indicator">Salvataggio...</span>}
-        </div>
+        {activeTab === 'dieta' && (
+          <div className="header-actions">
+            <button className="reset-btn" onClick={handleReset}>
+              Reset Settimana
+            </button>
+            {saving && <span className="save-indicator">Salvataggio...</span>}
+          </div>
+        )}
       </header>
 
-      <WeekView
-        weeklyMeals={weeklyMeals}
-        onAddMeal={handleAddMeal}
-        onRemoveMeal={handleRemoveMeal}
-      />
+      {activeTab === 'dieta' && (
+        <>
+          <WeekView
+            weeklyMeals={weeklyMeals}
+            onAddMeal={handleAddMeal}
+            onRemoveMeal={handleRemoveMeal}
+          />
 
-      {showSelector && (
-        <MealSelector
-          availableMeals={getAvailableMeals()}
-          onSelect={handleSelectMeal}
-          onClose={() => {
-            setShowSelector(false)
-            setCurrentSlot(null)
-          }}
-        />
+          {showSelector && (
+            <MealSelector
+              availableMeals={getAvailableMeals()}
+              onSelect={handleSelectMeal}
+              onClose={() => {
+                setShowSelector(false)
+                setCurrentSlot(null)
+              }}
+            />
+          )}
+        </>
+      )}
+
+      {activeTab === 'altro' && (
+        <div className="tab-content">
+          <p className="placeholder">Contenuto in arrivo...</p>
+        </div>
       )}
     </div>
   )
