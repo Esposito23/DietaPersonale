@@ -216,6 +216,12 @@ function App() {
               🍽️ Dieta
             </button>
             <button
+              className={`tab ${activeTab === 'latte' ? 'active' : ''}`}
+              onClick={() => setActiveTab('latte')}
+            >
+              🍼 Latte
+            </button>
+            <button
               className={`tab ${activeTab === 'bagno' ? 'active' : ''}`}
               onClick={() => setActiveTab('bagno')}
             >
@@ -252,6 +258,12 @@ function App() {
             />
           )}
         </>
+      )}
+
+      {activeTab === 'latte' && (
+        <div className="tab-content">
+          <p className="placeholder">Contenuto in arrivo...</p>
+        </div>
       )}
 
       {activeTab === 'bagno' && (
