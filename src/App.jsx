@@ -4,25 +4,25 @@ import MealSelector from './components/MealSelector'
 import { fetchMeals, saveMeals, resetWeek } from './utils/api'
 import './App.css'
 
-// Lista ingredienti disponibili
+// Lista ingredienti disponibili con icone
 const AVAILABLE_MEALS = [
-  'Vitello',
-  'Tacchino',
-  'Pollo',
-  'Platessa',
-  'Merluzzo',
-  'Uovo',
-  'Lenticchie 1',
-  'Lenticchie 2',
-  'Piselli secchi',
-  'Ceci secchi',
-  'Ricotta',
-  'Robiola',
-  'Formaggio fuso',
-  'Parmigiano',
-  'Broccoli',
-  'Zucca',
-  'Pomodori'
+  '🥩 Vitello',
+  '🦃 Tacchino',
+  '🐔 Pollo',
+  '🐟 Platessa',
+  '🐟 Merluzzo',
+  '🥚 Uovo',
+  '🫘 Lenticchie 1',
+  '🫘 Lenticchie 2',
+  '🫛 Piselli secchi',
+  '🫘 Ceci secchi',
+  '🧀 Ricotta',
+  '🧀 Robiola',
+  '🧀 Formaggio fuso',
+  '🧀 Parmigiano',
+  '🥦 Broccoli',
+  '🎃 Zucca',
+  '🍅 Pomodori'
 ]
 
 function App() {

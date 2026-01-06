@@ -90,6 +90,9 @@
   text-align: left;
   transition: all 0.2s;
   color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .meal-item:hover {

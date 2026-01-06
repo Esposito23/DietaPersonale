@@ -68,6 +68,9 @@
   font-size: 0.9rem;
   font-weight: 500;
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .remove-btn {
