@@ -29,6 +29,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('dieta')
   const [weeklyMeals, setWeeklyMeals] = useState({})
   const [lastBathDate, setLastBathDate] = useState(null)
+  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [selectedDate, setSelectedDate] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [showSelector, setShowSelector] = useState(false)
@@ -92,6 +94,16 @@ function App() {
   function handleBathToday() {
     const today = new Date().toISOString()
     updateBathDate(today)
+    setShowDatePicker(false)
+  }
+
+  function handleSaveCustomDate() {
+    if (selectedDate) {
+      const dateISO = new Date(selectedDate + 'T12:00:00').toISOString()
+      updateBathDate(dateISO)
+      setShowDatePicker(false)
+      setSelectedDate('')
+    }
   }
 
   function getDaysSinceBath() {
@@ -201,7 +213,7 @@ function App() {
               className={`tab ${activeTab === 'dieta' ? 'active' : ''}`}
               onClick={() => setActiveTab('dieta')}
             >
-              Dieta
+              🍽️ Dieta
             </button>
             <button
               className={`tab ${activeTab === 'bagno' ? 'active' : ''}`}
@@ -270,6 +282,32 @@ function App() {
             <button className="bath-btn" onClick={handleBathToday}>
               Fatto Oggi
             </button>
+
+            <button
+              className="date-picker-toggle"
+              onClick={() => setShowDatePicker(!showDatePicker)}
+            >
+              {showDatePicker ? 'Nascondi' : 'Altra data'}
+            </button>
+
+            {showDatePicker && (
+              <div className="custom-date-picker">
+                <input
+                  type="date"
+                  className="date-input"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  max={new Date().toISOString().split('T')[0]}
+                />
+                <button
+                  className="save-date-btn"
+                  onClick={handleSaveCustomDate}
+                  disabled={!selectedDate}
+                >
+                  Salva Data
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
