@@ -143,10 +143,10 @@ function App() {
     }
   }
 
-  async function handleAddFeed(amount) {
+  async function handleAddFeed(amount, date) {
     setFeedsSaving(true)
     try {
-      const result = await addFeed(amount)
+      const result = await addFeed(amount, date)
       setMilkFeeds(prev => ({
         ...prev,
         [result.date]: result.data

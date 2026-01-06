@@ -19,8 +19,8 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      // Aggiungi nuova poppata per oggi
-      const { amount } = req.body
+      // Aggiungi nuova poppata
+      const { amount, date } = req.body
 
       // Validazione
       if (!amount || amount <= 0) {
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
       // Data e ora correnti
       const now = new Date()
-      const dateKey = now.toISOString().split('T')[0] // YYYY-MM-DD
+      const dateKey = date || now.toISOString().split('T')[0] // YYYY-MM-DD
       const time = now.toISOString()
 
       // Recupera dati esistenti

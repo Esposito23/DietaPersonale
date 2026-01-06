@@ -65,14 +65,14 @@ export async function fetchFeeds() {
   }
 }
 
-export async function addFeed(amount) {
+export async function addFeed(amount, date) {
   try {
     const res = await fetch(`${API_BASE}/feeds`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ amount })
+      body: JSON.stringify({ amount, date })
     })
     if (!res.ok) throw new Error('Failed to add feed')
     return await res.json()

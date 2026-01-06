@@ -4,36 +4,40 @@ import './MilkTracker.css'
 function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
   const [amount, setAmount] = useState('')
   const [error, setError] = useState('')
+  const [selectedDate, setSelectedDate] = useState(() => {
+    return new Date().toISOString().split('T')[0]
+  })
 
   // Ottieni data corrente in formato YYYY-MM-DD
   function getTodayKey() {
     return new Date().toISOString().split('T')[0]
   }
 
-  // Ottieni poppate di oggi
-  function getTodayFeeds() {
-    const todayKey = getTodayKey()
-    const todayData = feeds[todayKey]
-    if (!todayData || !todayData.feeds) return []
+  // Verifica se la data selezionata è oggi
+  function isToday() {
+    return selectedDate === getTodayKey()
+  }
+
+  // Ottieni poppate del giorno selezionato
+  function getSelectedDateFeeds() {
+    const dateData = feeds[selectedDate]
+    if (!dateData || !dateData.feeds) return []
 
     // Ordina per orario (più recente prima)
-    return [...todayData.feeds].sort((a, b) =>
+    return [...dateData.feeds].sort((a, b) =>
       new Date(b.time) - new Date(a.time)
     )
   }
 
-  // Ottieni totale di oggi
-  function getTodayTotal() {
-    const todayKey = getTodayKey()
-    return feeds[todayKey]?.total || 0
+  // Ottieni totale del giorno selezionato
+  function getSelectedDateTotal() {
+    return feeds[selectedDate]?.total || 0
   }
 
-  // Ottieni giorni passati
-  function getPastDays() {
-    const todayKey = getTodayKey()
-
+  // Ottieni altri giorni (non quello selezionato)
+  function getOtherDays() {
     return Object.entries(feeds)
-      .filter(([date]) => date < todayKey)
+      .filter(([date]) => date !== selectedDate)
       .sort(([dateA], [dateB]) => dateB.localeCompare(dateA))
       .map(([date, data]) => ({
         date,
@@ -82,7 +86,7 @@ function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
     }
 
     try {
-      await onAddFeed(amountNum)
+      await onAddFeed(amountNum, selectedDate)
       setAmount('')
       setError('')
     } catch (err) {
@@ -94,28 +98,48 @@ function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
   async function handleDeleteFeed(time) {
     if (!confirm('Vuoi eliminare questa poppata?')) return
 
-    const todayKey = getTodayKey()
     try {
-      await onDeleteFeed(todayKey, time)
+      await onDeleteFeed(selectedDate, time)
     } catch (err) {
       alert('Errore nell\'eliminare la poppata')
     }
   }
 
-  const todayFeeds = getTodayFeeds()
-  const todayTotal = getTodayTotal()
-  const pastDays = getPastDays()
+  // Formatta label data selezionata
+  function getSelectedDateLabel() {
+    if (isToday()) return 'Oggi'
+    return formatDate(selectedDate)
+  }
+
+  const selectedFeeds = getSelectedDateFeeds()
+  const selectedTotal = getSelectedDateTotal()
+  const otherDays = getOtherDays()
 
   return (
     <div className="milk-tracker">
-      {/* Sezione Oggi */}
+      {/* Selettore Data */}
+      <div className="date-selector">
+        <label htmlFor="date-input" className="date-label">
+          📅 Seleziona Data
+        </label>
+        <input
+          id="date-input"
+          type="date"
+          className="date-input-field"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          max={getTodayKey()}
+        />
+      </div>
+
+      {/* Sezione Giorno Selezionato */}
       <div className="milk-today">
-        <h2 className="milk-section-title">Oggi</h2>
+        <h2 className="milk-section-title">{getSelectedDateLabel()}</h2>
 
         {/* Totale giornaliero */}
         <div className="milk-total-card">
           <div className="milk-total-label">Totale</div>
-          <div className="milk-total-value">{todayTotal} ml</div>
+          <div className="milk-total-value">{selectedTotal} ml</div>
         </div>
 
         {/* Form aggiungi poppata */}
@@ -142,11 +166,11 @@ function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
           </button>
         </form>
 
-        {/* Lista poppate di oggi */}
-        {todayFeeds.length > 0 ? (
+        {/* Lista poppate del giorno */}
+        {selectedFeeds.length > 0 ? (
           <div className="milk-feed-list">
-            <h3 className="milk-list-title">Poppate di Oggi</h3>
-            {todayFeeds.map((feed) => (
+            <h3 className="milk-list-title">Poppate del Giorno</h3>
+            {selectedFeeds.map((feed) => (
               <div key={feed.time} className="milk-feed-item">
                 <div className="feed-info">
                   <span className="feed-time">⏰ {formatTime(feed.time)}</span>
@@ -165,17 +189,17 @@ function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
           </div>
         ) : (
           <div className="milk-empty">
-            <p>Nessuna poppata registrata oggi</p>
+            <p>Nessuna poppata registrata per questo giorno</p>
           </div>
         )}
       </div>
 
-      {/* Sezione Giorni Precedenti */}
-      {pastDays.length > 0 && (
+      {/* Sezione Altri Giorni */}
+      {otherDays.length > 0 && (
         <div className="milk-history">
-          <h2 className="milk-section-title">Giorni Precedenti</h2>
+          <h2 className="milk-section-title">Altri Giorni</h2>
           <div className="milk-history-list">
-            {pastDays.map(({ date, total, dateLabel }) => (
+            {otherDays.map(({ date, total, dateLabel }) => (
               <div key={date} className="milk-history-item">
                 <span className="history-date">📅 {dateLabel}</span>
                 <span className="history-total">{total} ml</span>
