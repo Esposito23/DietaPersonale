@@ -78,6 +78,133 @@
   font-style: italic;
 }
 
+/* Bath Tracker */
+.bath-tracker {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.bath-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.bath-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 2rem 0;
+}
+
+.bath-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.bath-date-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.date-icon {
+  font-size: 2.5rem;
+}
+
+.date-text {
+  text-align: left;
+}
+
+.date-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.date-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.days-since {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.days-number {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.days-label {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+.bath-btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.bath-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(16, 185, 129, 0.4);
+}
+
+.bath-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .bath-tracker {
+    padding: 0.75rem;
+  }
+
+  .bath-card {
+    padding: 1.5rem;
+  }
+
+  .bath-title {
+    font-size: 1.5rem;
+  }
+
+  .date-icon {
+    font-size: 2rem;
+  }
+
+  .days-number {
+    font-size: 2.5rem;
+  }
+}
+
 .header-actions {
   display: flex;
   align-items: center;

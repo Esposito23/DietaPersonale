@@ -28,6 +28,7 @@ const AVAILABLE_MEALS = [
 function App() {
   const [activeTab, setActiveTab] = useState('dieta')
   const [weeklyMeals, setWeeklyMeals] = useState({})
+  const [lastBathDate, setLastBathDate] = useState(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [showSelector, setShowSelector] = useState(false)
@@ -36,6 +37,7 @@ function App() {
   // Carica i dati all'avvio
   useEffect(() => {
     loadMeals()
+    loadBathDate()
   }, [])
 
   // Salva automaticamente quando cambiano i dati (con debounce)
@@ -58,6 +60,57 @@ function App() {
     } finally {
       setLoading(false)
     }
+  }
+
+  async function loadBathDate() {
+    try {
+      const res = await fetch('/api/bath')
+      if (res.ok) {
+        const data = await res.json()
+        setLastBathDate(data.lastBathDate)
+      }
+    } catch (error) {
+      console.error('Error loading bath date:', error)
+    }
+  }
+
+  async function updateBathDate(date) {
+    try {
+      const res = await fetch('/api/bath', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lastBathDate: date })
+      })
+      if (res.ok) {
+        setLastBathDate(date)
+      }
+    } catch (error) {
+      console.error('Error updating bath date:', error)
+    }
+  }
+
+  function handleBathToday() {
+    const today = new Date().toISOString()
+    updateBathDate(today)
+  }
+
+  function getDaysSinceBath() {
+    if (!lastBathDate) return null
+    const now = new Date()
+    const bathDate = new Date(lastBathDate)
+    const diffTime = Math.abs(now - bathDate)
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    return diffDays
+  }
+
+  function formatBathDate() {
+    if (!lastBathDate) return 'Mai registrato'
+    const date = new Date(lastBathDate)
+    return date.toLocaleDateString('it-IT', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
   }
 
   async function saveData() {
@@ -151,10 +204,10 @@ function App() {
               Dieta
             </button>
             <button
-              className={`tab ${activeTab === 'altro' ? 'active' : ''}`}
-              onClick={() => setActiveTab('altro')}
+              className={`tab ${activeTab === 'bagno' ? 'active' : ''}`}
+              onClick={() => setActiveTab('bagno')}
             >
-              Altro
+              🛁 Bagno
             </button>
           </div>
         </div>
@@ -189,9 +242,35 @@ function App() {
         </>
       )}
 
-      {activeTab === 'altro' && (
-        <div className="tab-content">
-          <p className="placeholder">Contenuto in arrivo...</p>
+      {activeTab === 'bagno' && (
+        <div className="bath-tracker">
+          <div className="bath-card">
+            <h2 className="bath-title">🛁 Ultimo Bagno di Enea</h2>
+
+            <div className="bath-info">
+              <div className="bath-date-display">
+                <span className="date-icon">📅</span>
+                <div className="date-text">
+                  <p className="date-label">Ultima volta</p>
+                  <p className="date-value">{formatBathDate()}</p>
+                </div>
+              </div>
+
+              {getDaysSinceBath() !== null && (
+                <div className="days-since">
+                  <span className="days-number">{getDaysSinceBath()}</span>
+                  <span className="days-label">
+                    {getDaysSinceBath() === 0 ? 'Oggi' :
+                     getDaysSinceBath() === 1 ? 'giorno fa' : 'giorni fa'}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <button className="bath-btn" onClick={handleBathToday}>
+              Fatto Oggi
+            </button>
+          </div>
         </div>
       )}
     </div>
