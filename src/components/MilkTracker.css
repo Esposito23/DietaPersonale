@@ -273,12 +273,61 @@
   }
 }
 
+/* Selettore Data */
+.date-selector {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.date-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.date-input-field {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.date-input-field:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   .milk-today,
-  .milk-history {
+  .milk-history,
+  .date-selector {
     background: #1f2937;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .date-label {
+    color: #9ca3af;
+  }
+
+  .date-input-field {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .date-input-field:focus {
+    border-color: #3b82f6;
   }
 
   .milk-section-title {

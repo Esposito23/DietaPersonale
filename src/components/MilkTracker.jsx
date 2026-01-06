@@ -117,21 +117,6 @@ function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
 
   return (
     <div className="milk-tracker">
-      {/* Selettore Data */}
-      <div className="date-selector">
-        <label htmlFor="date-input" className="date-label">
-          📅 Seleziona Data
-        </label>
-        <input
-          id="date-input"
-          type="date"
-          className="date-input-field"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          max={getTodayKey()}
-        />
-      </div>
-
       {/* Sezione Giorno Selezionato */}
       <div className="milk-today">
         <h2 className="milk-section-title">{getSelectedDateLabel()}</h2>
@@ -208,6 +193,21 @@ function MilkTracker({ feeds, onAddFeed, onDeleteFeed, saving }) {
           </div>
         </div>
       )}
+
+      {/* Selettore Data */}
+      <div className="date-selector">
+        <label htmlFor="date-input" className="date-label">
+          📅 Seleziona Data
+        </label>
+        <input
+          id="date-input"
+          type="date"
+          className="date-input-field"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          max={getTodayKey()}
+        />
+      </div>
     </div>
   )
 }
