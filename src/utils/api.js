@@ -52,3 +52,49 @@ export async function resetWeek() {
     throw error
   }
 }
+
+// Milk Feeds API
+export async function fetchFeeds() {
+  try {
+    const res = await fetch(`${API_BASE}/feeds`)
+    if (!res.ok) throw new Error('Failed to fetch feeds')
+    return await res.json()
+  } catch (error) {
+    console.error('Error fetching feeds:', error)
+    return {}
+  }
+}
+
+export async function addFeed(amount) {
+  try {
+    const res = await fetch(`${API_BASE}/feeds`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ amount })
+    })
+    if (!res.ok) throw new Error('Failed to add feed')
+    return await res.json()
+  } catch (error) {
+    console.error('Error adding feed:', error)
+    throw error
+  }
+}
+
+export async function deleteFeed(date, time) {
+  try {
+    const res = await fetch(`${API_BASE}/feeds`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ date, time })
+    })
+    if (!res.ok) throw new Error('Failed to delete feed')
+    return await res.json()
+  } catch (error) {
+    console.error('Error deleting feed:', error)
+    throw error
+  }
+}

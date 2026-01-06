@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import WeekView from './components/WeekView'
 import MealSelector from './components/MealSelector'
-import { fetchMeals, saveMeals, resetWeek } from './utils/api'
+import MilkTracker from './components/MilkTracker'
+import { fetchMeals, saveMeals, resetWeek, fetchFeeds, addFeed, deleteFeed } from './utils/api'
 import './App.css'
 
 // Lista ingredienti disponibili con icone
@@ -29,10 +30,13 @@ function App() {
   const [activeTab, setActiveTab] = useState('dieta')
   const [weeklyMeals, setWeeklyMeals] = useState({})
   const [lastBathDate, setLastBathDate] = useState(null)
+  const [milkFeeds, setMilkFeeds] = useState({})
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [selectedDate, setSelectedDate] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [feedsLoading, setFeedsLoading] = useState(true)
+  const [feedsSaving, setFeedsSaving] = useState(false)
   const [showSelector, setShowSelector] = useState(false)
   const [currentSlot, setCurrentSlot] = useState(null)
 
@@ -40,6 +44,7 @@ function App() {
   useEffect(() => {
     loadMeals()
     loadBathDate()
+    loadFeeds()
   }, [])
 
   // Salva automaticamente quando cambiano i dati (con debounce)
@@ -123,6 +128,56 @@ function App() {
       month: 'long',
       year: 'numeric'
     })
+  }
+
+  // Milk Feeds functions
+  async function loadFeeds() {
+    setFeedsLoading(true)
+    try {
+      const data = await fetchFeeds()
+      setMilkFeeds(data)
+    } catch (error) {
+      console.error('Error loading feeds:', error)
+    } finally {
+      setFeedsLoading(false)
+    }
+  }
+
+  async function handleAddFeed(amount) {
+    setFeedsSaving(true)
+    try {
+      const result = await addFeed(amount)
+      setMilkFeeds(prev => ({
+        ...prev,
+        [result.date]: result.data
+      }))
+    } catch (error) {
+      console.error('Error adding feed:', error)
+      alert('Errore nel salvare la poppata')
+    } finally {
+      setFeedsSaving(false)
+    }
+  }
+
+  async function handleDeleteFeed(date, time) {
+    setFeedsSaving(true)
+    try {
+      const result = await deleteFeed(date, time)
+      setMilkFeeds(prev => {
+        const updated = { ...prev }
+        if (result.data && result.data.feeds && result.data.feeds.length > 0) {
+          updated[date] = result.data
+        } else {
+          delete updated[date]
+        }
+        return updated
+      })
+    } catch (error) {
+      console.error('Error deleting feed:', error)
+      alert('Errore nel cancellare la poppata')
+    } finally {
+      setFeedsSaving(false)
+    }
   }
 
   async function saveData() {
@@ -261,9 +316,16 @@ function App() {
       )}
 
       {activeTab === 'latte' && (
-        <div className="tab-content">
-          <p className="placeholder">Contenuto in arrivo...</p>
-        </div>
+        feedsLoading ? (
+          <div className="loading">Caricamento...</div>
+        ) : (
+          <MilkTracker
+            feeds={milkFeeds}
+            onAddFeed={handleAddFeed}
+            onDeleteFeed={handleDeleteFeed}
+            saving={feedsSaving}
+          />
+        )
       )}
 
       {activeTab === 'bagno' && (
