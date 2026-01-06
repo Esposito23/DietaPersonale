@@ -6,21 +6,23 @@ import './App.css'
 
 // Lista ingredienti disponibili
 const AVAILABLE_MEALS = [
-  'Vitello (30g)',
-  'Tacchino (30g)',
-  'Pollo (30g)',
-  'Platessa (30g)',
-  'Merluzzo (30g)',
-  'Uovo (1 tuorlo)',
-  'Lenticchie 1 (30g cotte)',
-  'Lenticchie 2 (30g cotte)',
-  'Piselli secchi (30g cotti)',
-  'Ceci secchi (30g cotti)',
-  'Ricotta (25g)',
-  'Robiola (25g)',
+  'Vitello',
+  'Tacchino',
+  'Pollo',
+  'Platessa',
+  'Merluzzo',
+  'Uovo',
+  'Lenticchie 1',
+  'Lenticchie 2',
+  'Piselli secchi',
+  'Ceci secchi',
+  'Ricotta',
+  'Robiola',
   'Formaggio fuso',
+  'Parmigiano',
   'Broccoli',
-  'Pomodori (per sugo)'
+  'Zucca',
+  'Pomodori'
 ]
 
 function App() {
