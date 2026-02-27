@@ -23,7 +23,8 @@ const AVAILABLE_MEALS = [
   '🧀 Parmigiano',
   '🥦 Broccoli',
   '🎃 Zucca',
-  '🍅 Pomodori'
+  '🍅 Pomodori',
+  '🥣 Passato di Verdure'
 ]
 
 function App() {
