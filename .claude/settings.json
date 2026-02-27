@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run preview:*)",
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(tree:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "description": "Blocca modifiche a file env e lock",
+        "command": "filepath=\"$CLAUDE_FILE_PATH\"; if echo \"$filepath\" | grep -qE '(\\.env|\\.env\\.local|package-lock\\.json)$'; then echo 'File protetto: non modificare .env o package-lock.json direttamente' >&2; exit 2; fi; exit 0",
+        "timeout": 5000
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "description": "Lint automatico dopo modifica file JS/JSX",
+        "command": "filepath=\"$CLAUDE_FILE_PATH\"; if echo \"$filepath\" | grep -qE '\\.(js|jsx)$'; then cd /sessions/vibrant-gracious-gauss/mnt/DietaPersonale && npm run lint 2>&1 | tail -5; fi; exit 0",
+        "timeout": 15000
+      }
+    ]
+  }
+}

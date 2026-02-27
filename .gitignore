@@ -33,3 +33,7 @@ dist-ssr
 
 # Vercel
 .vercel
+
+# Claude Code - file locali (settings.json condiviso è tracciato)
+.claude/settings.local.json
+CLAUDE.local.md
