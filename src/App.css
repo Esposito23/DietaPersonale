@@ -78,6 +78,40 @@
   font-style: italic;
 }
 
+/* Work in Progress */
+.wip-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.wip-card {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.wip-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.wip-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.75rem 0;
+}
+
+.wip-text {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin: 0;
+}
+
 /* Bath Tracker */
 .bath-tracker {
   max-width: 600px;
@@ -443,6 +477,19 @@
   }
 
   .loading {
+    color: #9ca3af;
+  }
+
+  .wip-card {
+    background: #1f2937;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .wip-title {
+    color: #f3f4f6;
+  }
+
+  .wip-text {
     color: #9ca3af;
   }
 }

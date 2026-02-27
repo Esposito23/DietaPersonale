@@ -283,6 +283,12 @@ function App() {
             >
               🛁 Bagno
             </button>
+            <button
+              className={`tab ${activeTab === 'nuovo' ? 'active' : ''}`}
+              onClick={() => setActiveTab('nuovo')}
+            >
+              🚧 Nuovo
+            </button>
           </div>
         </div>
         {activeTab === 'dieta' && (
@@ -327,6 +333,16 @@ function App() {
             saving={feedsSaving}
           />
         )
+      )}
+
+      {activeTab === 'nuovo' && (
+        <div className="wip-container">
+          <div className="wip-card">
+            <span className="wip-icon">🚧</span>
+            <h2 className="wip-title">Work in Progress</h2>
+            <p className="wip-text">Questa sezione è in fase di sviluppo.</p>
+          </div>
+        </div>
       )}
 
       {activeTab === 'bagno' && (
